@@ -1,0 +1,55 @@
+@import "./dark.css";
+
+.custom-bg-header {
+    background: #fafafa;
+}
+
+.limiter-input {
+    width: 100px !important;
+}
+
+.limiter-input-extended {
+    width: 250px !important;
+}
+
+.limiter-input-extended, .limiter-input {
+    height: 25px;
+}
+
+.m-l-r-10 {
+    margin: 0 10px;
+}
+
+.m-5 {
+    margin: 5px !important;
+}
+
+.label-standart-15 {
+    min-width: 15px;
+}
+
+.label-standart-20 {
+    min-width: 20px;
+}
+
+.label-standart-20, .label-standart-15 {
+    width: auto;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: white;
+    height: 140px;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.list .experiment {
+    cursor: pointer;
+}
+
+/*.checkbox-class {*/
+/*margin: 2px 0;*/
+/*}*/
