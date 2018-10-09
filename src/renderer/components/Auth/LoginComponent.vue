@@ -25,8 +25,8 @@
         name: 'Login',
         data(){
             return {
-                username: '',
-                password: '',
+                username: 'admin',
+                password: 'admin',
                 error: false
             }
         },
