@@ -19,11 +19,18 @@
                 }],
                 chartOptions: {
                     chart: {
-                        id: 'vuechart-example'
+                        id: 'vuechart-example',
+                        toolbar: { show: true },
+
+                        zoom: {
+                            enabled: true,
+                            type: 'x',
+                        }
                     },
-//                    xaxis: { //можно и не указывать
-//                        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-//                    }
+                    xaxis: { //можно и не указывать
+                        type: 'numeric',
+                        categories: [0, 1,2,3,4,5,6,7,8]
+                    }
                 },
 //                showChart: true,
 //                datacollection: null,
