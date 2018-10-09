@@ -4,7 +4,10 @@ import mutations from './mutations.js'
 
 Vue.use(Vuex)
 const state = {
-    allExperiments: []
+    allExperiments: [],
+    lastExperiment: {
+
+    }
 }
 
 export default new Vuex.Store({

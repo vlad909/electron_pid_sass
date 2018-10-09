@@ -1,5 +1,11 @@
 export default {
     addToListOfExperiments(state, payload){
-        state.allExperiments = payload
+        let olds = state.allExperiments
+        olds.push(payload)
+        state.allExperiments = olds
+    },
+    toLastExperiment(state, payload){
+        state.lastExperiment = payload
     }
+
 }

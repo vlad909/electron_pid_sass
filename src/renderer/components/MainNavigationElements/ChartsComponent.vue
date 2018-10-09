@@ -1,6 +1,6 @@
 <template>
     <div v-on:dblclick="resetZoom" class="small">
-        <button @click="addd">b;a</button>
+        <!--<button @click="addd">b;a</button>-->
         <apexcharts :width="700" :height="400" type="line" :options="chartOptions" :series="series"></apexcharts>
         <!--<LineChart v-if="showChart" :chart-data="datacollection" :options="options" ref="myLine"></LineChart>-->
     </div>
