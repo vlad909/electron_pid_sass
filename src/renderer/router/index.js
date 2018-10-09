@@ -7,7 +7,12 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'generalComponent',
+            name: 'login',
+            component: () => import('../components/Auth/LoginComponent.vue')
+        },
+        {
+            path: 'main-page',
+            name: 'general',
             component: () => import('../components/MainNavigationElements/GeneralComponent.vue')
         },
         {
