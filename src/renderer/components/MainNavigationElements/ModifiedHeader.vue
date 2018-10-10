@@ -135,23 +135,6 @@
         components: {mixedComponent},
         data(){
             return {
-//                LRBE: false,
-//                L: 1.3,
-//                R: 3.4,
-//                Betta: 1,
-//                E: 5,
-//                a: 0.9,
-//                b: 0.1,
-//                ap: 0.27,
-//                bp: 0.27,
-//                n: 100,
-//                x0: 5,
-//                Kp: 10,
-//                Ki: 1,
-//                Kd: 3,
-//                T: 1,
-//                t: 100,
-//                selected_formula: 'P',
                 formulas: [
                     {text: 'Rectangle', value: 'P'},
                     {text: 'Trapeze', value: 'T'},
@@ -181,11 +164,6 @@
                 'lastExperiment.t',
                 'lastExperiment.selected_formula'
             ])
-        },
-        watch: {
-            experiment(n){
-                console.log(n, 'changed')
-            }
         },
         methods: {}
     }
