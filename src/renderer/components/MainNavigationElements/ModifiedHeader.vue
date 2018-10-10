@@ -150,7 +150,8 @@
 //                    Ki: 1,
 //                    Kd: 3,
 //                    T: 1,
-//                    t: 100
+//                    t: 100,
+//                    formula: 'P'
 //                },
                 selected_formula: 'P',
                 formulas: [

@@ -20,7 +20,7 @@
                 chartOptions: {
                     chart: {
                         id: 'vuechart-example',
-                        toolbar: { show: true },
+                        toolbar: {show: true},
 
                         zoom: {
                             enabled: true,
@@ -28,7 +28,8 @@
                         }
                     },
                     xaxis: { //можно и не указывать
-                        categories: [0, 1,2,3,4,5,6,7,8]
+                        type: 'numeric',
+                        categories: [0, 2, 4, 6, 8, 10, 12, 14]
                     }
                 },
 //                showChart: true,
