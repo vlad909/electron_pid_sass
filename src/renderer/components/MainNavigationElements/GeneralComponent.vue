@@ -2,8 +2,8 @@
     <div>
         <modifiedHeader></modifiedHeader>
         <div class="d-flex flex-row">
-            <Graphs style="width: 70%"></Graphs>
-            <shortTable style="width: 30%"></shortTable>
+            <Graphs style="width: 80%"></Graphs>
+            <shortTable style="width: 20%"></shortTable>
         </div>
     </div>
 </template>

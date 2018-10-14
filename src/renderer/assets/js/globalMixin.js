@@ -1,3 +1,4 @@
+import {EventBus} from './EventBus.js'
 export const actions = {
     data(){
         return {
@@ -53,6 +54,7 @@ export const actions = {
                     : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
             }
             setting.name = Date.now()
+            EventBus.$emit('addLine', setting.name, x)
             this.$store.commit('addToListOfExperiments', Object.assign({}, {
                 params: setting
             }, {
