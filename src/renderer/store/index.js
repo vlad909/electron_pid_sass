@@ -24,7 +24,7 @@ const state = {
         T: 1,
         t: 100,
         selected_formula: 'P'
-    }
+    },
 }
 
 export default new Vuex.Store({

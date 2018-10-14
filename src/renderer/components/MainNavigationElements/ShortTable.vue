@@ -47,6 +47,9 @@
                 },
                 deep: true
             }
+        },
+        created(){
+            this.orderBySoloFormula(this.currentExperiment)
         }
     }
 </script>

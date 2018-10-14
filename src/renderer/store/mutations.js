@@ -6,6 +6,6 @@ export default {
     },
     toLastExperiment(state, payload){
         state.lastExperiment = payload
-    }
+    },
 
 }
