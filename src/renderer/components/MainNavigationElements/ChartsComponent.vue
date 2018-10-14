@@ -1,5 +1,5 @@
 <template>
-    <div v-on:dblclick="resetZoom" class="small">
+    <div class="small">
         <!--<button @click="addd">b;a</button>-->
         <apexcharts :width="1000" :height="400" type="line" :options="chartOptions" :series="series"></apexcharts>
         <!--<LineChart v-if="showChart" :chart-data="datacollection" :options="options" ref="myLine"></LineChart>-->
@@ -50,12 +50,6 @@
 //                    name: 'chartist'
 //                })
 //            },
-//            resetZoom(){
-//                this.showChart = !this.showChart
-//                setTimeout(() => {
-//                    this.showChart = true
-//                }, 1)
-//            }
         },
         created(){
             EventBus.$on('addLine', (name, data) => {

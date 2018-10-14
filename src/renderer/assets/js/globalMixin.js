@@ -48,7 +48,7 @@ export const actions = {
             // result.U.push(setting.Kp * setting.x0) // U by n = 0
             for (let i = 0; i <= count; i++) {
                 x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
-                dx.push(Math.abs(x[i] - setting.x0))
+                dx.push(setting.x0 - x[i])
                 U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : auto_params.K0 * setting.x0 - auto_params.K0 * x[i] - auto_params.K2 *
                     setting.x0)
                     : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
