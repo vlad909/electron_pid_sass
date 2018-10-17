@@ -7,7 +7,7 @@ import { app, BrowserWindow } from 'electron'
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true; //убрать эту строку для прода
+ //убрать эту строку для прода
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`

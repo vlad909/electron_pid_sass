@@ -6,10 +6,9 @@
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
-    /*для сборки используется vue-builderd, также установлен wine*/
-    "build": "node .electron-vue/build.js && electron-builder", /* сборщик для Linux*/
-    "build:windows": "node .electron-vue/build.js && electron-builder --w", /*сборщик для win - ссылка ниже*/
-    "build:windows:dirty": "build --win dir", /* не использовать, потому что никак не создаёт portable и использует стандартный сборщик*/
+    "build": "node .electron-vue/build.js && electron-builder",
+    "build:windows": "node .electron-vue/build.js && electron-builder --w",
+    "build:windows:dirty": "build --win dir",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -47,8 +46,7 @@
       "icon": "build/icons/icon.icns"
     },
     "win": {
-      "target": "portable", //portable - not install ver, NSIS - setup
-      /*  https://www.electron.build/ - ссылка со всеми видами сборок*/
+      "target": "portable",
       "icon": "build/icons/icon.ico"
     },
     "linux": {

@@ -1,15 +1,19 @@
 import {EventBus} from './EventBus.js'
+
 export const actions = {
-    data(){
+    data() {
         return {
             experiment: {}
         }
     },
     methods: {
-        limiterByWidth(count, what = 'px'){
+        somethingIsVoid(obj) { //если одно из полей метода отсутствует
+            return Object.values(obj).some(e => e === null || e === '')
+        },
+        limiterByWidth(count, what = 'px') {
             return {width: count + what}
         },
-        orderBySoloFormula(exp){ //расчёт стандартных K
+        orderBySoloFormula(exp, action = 'change') { //расчёт стандартных K
             switch (exp.selected_formula) {
                 case 'P':
                     this.experiment.standard_K = {
@@ -17,7 +21,7 @@ export const actions = {
                         K1: -(2 * exp.Kd / exp.T + exp.Kp),
                         K2: exp.Kd / exp.T
                     }
-                    this.rectangleMethod(exp, this.experiment.standard_K)
+                    this.rectangleMethod(exp, this.experiment.standard_K, action)
                     break
                 case 'T':
                     this.experiment.standard_K = {
@@ -40,7 +44,7 @@ export const actions = {
             }
             // this.$store.commit('addToListOfExperiments', this.experiment)
         },
-        rectangleMethod(setting, auto_params){ //пока только для константы
+        rectangleMethod(setting, auto_params, action) { //пока только для константы
             let x = [],
                 U = [],
                 dx = [],
@@ -53,8 +57,10 @@ export const actions = {
                     setting.x0)
                     : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
             }
-            setting.name = Date.now()
-            EventBus.$emit('addLine', setting.name, x)
+            if (action !== 'change') {
+                setting.name = Date.now()
+            }
+            EventBus.$emit(action === 'change' ? 'changeLineByName' : 'addLine', setting.name, x)
             this.$store.commit('addToListOfExperiments', Object.assign({}, {
                 params: setting
             }, {

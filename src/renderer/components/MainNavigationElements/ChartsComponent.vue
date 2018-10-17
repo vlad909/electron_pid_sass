@@ -9,9 +9,10 @@
     //    import LineChart from '../../assets/js/LineChart.js'
     import VueApexCharts from 'vue-apexcharts'
     import {EventBus} from '../../assets/js/EventBus.js'
-    export default{
+
+    export default {
         components: {apexcharts: VueApexCharts},
-        data(){
+        data() {
             return {
                 series: [
 //                    {
@@ -51,9 +52,17 @@
 //                })
 //            },
         },
-        created(){
+        created() {
             EventBus.$on('addLine', (name, data) => {
                 this.series.push({name: name, data: data})
+            })
+            EventBus.$on('changeLineByName', (name, new_data) => {
+                let index = this.series.findIndex(e => e.name === name)
+                if (index !== -1) {
+                    this.series[index].data = new_data
+                } else {
+                    alert(`This experiment doesn't exist`)
+                }
             })
         }
     }

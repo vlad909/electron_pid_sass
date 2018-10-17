@@ -16,11 +16,6 @@ export default new Router({
             component: () => import('../components/MainNavigationElements/GeneralComponent.vue')
         },
         {
-            path: 'chartist',
-            name: 'chartist',
-            component: () => import('../components/MainNavigationElements/Lines.vue')
-        },
-        {
             path: '*',
             redirect: '/'
         }

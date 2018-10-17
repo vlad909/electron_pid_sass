@@ -43,13 +43,12 @@
             currentExperiment: {
                 handler(n){
                     this.orderBySoloFormula(n)
-                    console.log(n, 'exp changed')
                 },
                 deep: true
             }
         },
         created(){
-            this.orderBySoloFormula(this.currentExperiment)
+            this.orderBySoloFormula(this.currentExperiment, 'add')
         }
     }
 </script>
