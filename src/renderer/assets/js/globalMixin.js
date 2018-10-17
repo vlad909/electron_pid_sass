@@ -61,8 +61,9 @@ export const actions = {
                 setting.name = Date.now()
             }
             EventBus.$emit(action === 'change' ? 'changeLineByName' : 'addLine', setting.name, x)
-            this.$store.commit('addToListOfExperiments', Object.assign({}, {
-                params: setting
+            this.$store.commit('setDataInLastExperiment', Object.assign({}, {
+                name: setting.name,
+                creates_method: action,
             }, {
                 data: {
                     x: x,

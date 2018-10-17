@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import mutations from './mutations.js'
+import getters from './getters.js'
 import {getField, updateField} from 'vuex-map-fields';
 
 Vue.use(Vuex)
@@ -25,6 +26,7 @@ const state = {
         t: 100,
         selected_formula: 'P'
     },
+    lastExperimentData: {}
 }
 
 export default new Vuex.Store({
@@ -35,6 +37,7 @@ export default new Vuex.Store({
         updateField
     },
     getters: {
+        ...getters,
         getField
     }
 })
