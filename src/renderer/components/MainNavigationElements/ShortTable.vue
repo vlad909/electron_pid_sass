@@ -1,5 +1,5 @@
 <template>
-    <div class="d-inline-flex align-items-start">
+    <div class="d-inline-flex align-items-start general-ul-container">
         <ul class="like-table-n m-0">
             <li>n</li>
             <li v-for="(i, index) in x_array">{{index}}</li>
@@ -18,24 +18,6 @@
         </ul>
 
     </div>
-    <!--<table class="table table-bordered m-t-20 m-l-20">-->
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th scope="col">n</th>-->
-    <!--<th scope="col">x(nT)</th>-->
-    <!--<th scope="col">U(T)</th>-->
-    <!--<th scope="col">dx(nT)</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-    <!--<tr v-for="(item, index) in x_array" :key="index">-->
-    <!--<td>{{index}}</td>-->
-    <!--<td>{{item}}</td>-->
-    <!--<td>{{u_array[index]}}</td>-->
-    <!--<td>{{dx_array[index]}}</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
 </template>
 <script>
     import {actions} from '../../assets/js/globalMixin'
@@ -86,10 +68,15 @@
     }
 
     .like-table-n {
-        width: 30px;
+        width: 50px;
     }
 
     .like-table-n, .like-table {
         padding: 0;
+    }
+
+    .general-ul-container {
+        height: 420px;
+        overflow-y: scroll;
     }
 </style>

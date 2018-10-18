@@ -17,21 +17,27 @@
                         :disabled="!username || !password">Login
                 </button>
             </form>
+            <!--<transition name="moving">-->
+                <!--<div class="alert-container catch" v-if="bla">-->
+                    <!--<p style="text-align: center">ggfgggggggggggggggggfgdggd</p>-->
+                <!--</div>-->
+            <!--</transition>-->
         </div>
     </div>
 </template>
 <script>
-    export default{
+    export default {
         name: 'Login',
-        data(){
+        data() {
             return {
                 username: 'admin',
                 password: 'admin',
-                error: false
+                error: false,
+                bla: false
             }
         },
         methods: {
-            login(){ //clean fake
+            login() { //clean fake
                 if (this.username === 'admin' && this.password === 'admin') {
                     this.$router.push({
                         name: 'general'
@@ -67,6 +73,14 @@
             .btn-login {
                 width: 261px;
             }
+            /*transition animation  */
+            .moving-enter-active, .moving .moving-leave-active {
+                transition: right .5s;
+            }
+            .moving-enter, .moving-leave-to {
+                right: -140px;
+            }
+
         }
     }
 </style>

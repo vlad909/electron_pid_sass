@@ -48,9 +48,10 @@ export const actions = {
             let x = [],
                 U = [],
                 dx = [],
-                count = setting.t / setting.T - 1
+                count = Math.floor(setting.t / setting.T)
+            EventBus.$emit('changeDisabledCountN', count)
             // result.U.push(setting.Kp * setting.x0) // U by n = 0
-            for (let i = 0; i <= count; i++) {
+            for (let i = 0; i <= count - 1; i++) {
                 x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
                 dx.push(setting.x0 - x[i])
                 U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : auto_params.K0 * setting.x0 - auto_params.K0 * x[i] - auto_params.K2 *

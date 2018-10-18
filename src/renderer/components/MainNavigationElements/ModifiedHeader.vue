@@ -131,9 +131,11 @@
     //    import {actions} from '../../assets/js/globalMixin'
     import mixedComponent from './MixedParams.vue'
     import {mapFields} from 'vuex-map-fields';
-    export default{
+    import {EventBus} from "../../assets/js/EventBus";
+
+    export default {
         components: {mixedComponent},
-        data(){
+        data() {
             return {
                 formulas: [
                     {text: 'Rectangle', value: 'P'},
@@ -165,7 +167,12 @@
                 'lastExperiment.selected_formula'
             ])
         },
-        methods: {}
+        methods: {},
+        mounted() {
+            EventBus.$on('changeDisabledCountN', (n) => {
+                this.n = n
+            })
+        }
     }
 </script>
 <style scoped>
@@ -173,5 +180,6 @@
         height: auto;
         min-height: 100px;
     }
+
 
 </style>
