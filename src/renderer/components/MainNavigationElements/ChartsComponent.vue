@@ -72,6 +72,7 @@
                 this.series.push({name: name, data: data})
             })
             EventBus.$on('changeLineByName', (name, new_data) => {
+                console.log(name, 'chart_comp')
                 let index = this.series.findIndex(e => e.name === name)
                 if (index !== -1) {
                     this.series[index].data = new_data

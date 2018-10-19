@@ -7,6 +7,11 @@ export const actions = {
         }
     },
     methods: {
+        addToListAdded(obj) {
+            // console.log('bf', this.$store.state.lastExperiment)
+            console.warn(obj.name, 'add')
+            this.$store.commit('addToAdded', obj)
+        },
         somethingIsVoid(obj) { //если одно из полей метода отсутствует
             return Object.values(obj).some(e => e === null || e === '')
         },
@@ -60,7 +65,9 @@ export const actions = {
             }
             if (action !== 'change') {
                 setting.name = Date.now()
+                this.addToListAdded(setting)
             }
+            console.error(setting.name, 'after add')
             EventBus.$emit(action === 'change' ? 'changeLineByName' : 'addLine', setting.name, x)
             this.$store.commit('setDataInLastExperiment', Object.assign({}, {
                 name: setting.name,

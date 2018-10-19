@@ -88,16 +88,22 @@
                         <input type="text" class="form-control limiter-input" id="frac" value="3">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="experiments">List of experiments</label>
-                    <select multiple class="form-control" id="experiments">
-                        <option>Experiment 1</option>
-                        <option>Experiment 2</option>
-                        <option>Experiment 3</option>
-                        <option>Experiment 4</option>
-                        <option>Experiment 5</option>
-                        <option>Experiment 5</option>
-                    </select>
+                <div class="d-inline-flex w-100">
+                    <div class="w-75 bg-white">
+                        <ul class="exp-table">
+                            <!--<li class="active">Experiment 1</li>-->
+                            <li :class="{active: e.name === LastExperiment.name}"
+                                v-for="(e, index) in listExperiments"
+                                :key="index"
+                                @click="setNewLast(index)">
+                                {{e.name}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex flex-column align-items-start justify-content-center m-l-10">
+                        <button type="button" class="btn btn-success m-b-10" @click="addExp">+</button>
+                        <button type="button" class="btn btn-danger">−</button>
+                    </div>
                 </div>
 
             </div>
@@ -132,8 +138,11 @@
     import mixedComponent from './MixedParams.vue'
     import {mapFields} from 'vuex-map-fields';
     import {EventBus} from "../../assets/js/EventBus";
+    // import {actions} from "../../assets/js/globalMixin";
+    import {cloneDeep} from 'lodash'
 
     export default {
+        // mixins: [actions],
         components: {mixedComponent},
         data() {
             return {
@@ -165,9 +174,22 @@
                 'lastExperiment.T',
                 'lastExperiment.t',
                 'lastExperiment.selected_formula'
-            ])
+            ]),
+            listExperiments() {
+                return this.$store.state.listAddedExperiments || []
+            },
+            LastExperiment() {
+                return this.$store.state.lastExperiment
+            }
         },
-        methods: {},
+        methods: {
+            addExp() {
+                this.orderBySoloFormula(cloneDeep(this.LastExperiment, true), 'add')
+            },
+            setNewLast(i) {
+                this.$store.commit('customMutateLast', cloneDeep(this.listExperiments[i], true))
+            }
+        },
         mounted() {
             EventBus.$on('changeDisabledCountN', (n) => {
                 this.n = n
@@ -175,11 +197,16 @@
         }
     }
 </script>
-<style scoped>
+<style lang="scss" scoped>
     select.form-control[multiple] {
         height: auto;
         min-height: 100px;
     }
 
+    .exp-table {
+        .active {
+            background: #dadada;
+        }
+    }
 
 </style>

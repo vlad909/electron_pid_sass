@@ -24,9 +24,10 @@ const state = {
         Kd: 3,
         T: 1,
         t: 100,
-        selected_formula: 'P'
+        selected_formula: 'P',
     },
-    lastExperimentData: {}
+    lastExperimentData: {},
+    listAddedExperiments: []
 }
 
 export default new Vuex.Store({

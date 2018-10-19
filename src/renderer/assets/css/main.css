@@ -50,6 +50,40 @@
     cursor: pointer;
 }
 
+.like-table li, .like-table-n li {
+    list-style: none !important;
+    width: auto;
+    border: 1px solid #eee;
+}
+
+.exp-table {
+    width: 200px;
+}
+
+.exp-table li {
+    list-style: none !important;
+    width: auto;
+    margin: 1px 5px 3px;
+    text-align: left;
+}
+
+.like-table {
+    width: 120px;
+}
+
+.like-table-n {
+    width: 50px;
+}
+
+.like-table-n, .like-table, .exp-table {
+    padding: 0;
+}
+
+.general-ul-container {
+    height: 420px;
+    overflow-y: scroll;
+}
+
 /*.checkbox-class {*/
 /*margin: 2px 0;*/
 /*}*/

@@ -9,6 +9,14 @@ export default {
     },
     setDataInLastExperiment(state, payload) {
         state.lastExperimentData = payload
+    },
+    addToAdded(state, payload) {
+        let prev = state.listAddedExperiments
+        prev.push(payload)
+        state.listAddedExperiments = prev
+    },
+    customMutateLast(state, payload) {
+        state.lastExperiment = payload
     }
 
 }
