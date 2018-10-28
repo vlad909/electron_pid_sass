@@ -191,14 +191,15 @@
 
             },
             setNewLast(i) {
-                if (this.localLastIndex !== i) {
-                    this.localLastIndex = i
-                    this.$store.commit('customMutateLast', cloneDeep(this.listExperiments[i], true))
-                }
+                // if (this.localLastIndex !== i) {
+                this.localLastIndex = i
+                this.$store.commit('customMutateLast', this.listExperiments[i])
+                // }
             },
             deleteExp() {
                 EventBus.$emit('deleteLine', this.LastExperiment.name)
                 this.$store.commit('removeFromAdded', this.localLastIndex)
+                this.setNewLast(0)
             }
         },
         mounted() {

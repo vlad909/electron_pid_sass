@@ -66,6 +66,7 @@ export const actions = {
                 setting.name = Date.now()
                 this.addToListAdded(setting)
             }
+            console.log('act', action)
             EventBus.$emit(action === 'change' ? 'changeLineByName' : 'addLine', setting.name, x)
             this.$store.commit('setDataInLastExperiment', Object.assign({}, {
                 name: setting.name,
