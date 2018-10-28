@@ -71,8 +71,11 @@
             EventBus.$on('addLine', (name, data) => {
                 this.series.push({name: name, data: data})
             })
+            EventBus.$on('deleteLine', (name) => {
+                let index = this.series.findIndex(e => e.name === name)
+                this.series.splice(index, 1)
+            })
             EventBus.$on('changeLineByName', (name, new_data) => {
-                console.log(name, 'chart_comp')
                 let index = this.series.findIndex(e => e.name === name)
                 if (index !== -1) {
                     this.series[index].data = new_data

@@ -15,6 +15,11 @@ export default {
         prev.push(payload)
         state.listAddedExperiments = prev
     },
+    removeFromAdded(state, index) {
+        let prev = state.listAddedExperiments
+        prev.splice(index, 1)
+        state.listAddedExperiments = prev
+    },
     customMutateLast(state, payload) {
         state.lastExperiment = payload
     }

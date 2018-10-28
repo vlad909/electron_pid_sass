@@ -102,7 +102,9 @@
                     </div>
                     <div class="d-flex flex-column align-items-start justify-content-center m-l-10">
                         <button type="button" class="btn btn-success m-b-10" @click="addExp">+</button>
-                        <button type="button" class="btn btn-danger">−</button>
+                        <button type="button" class="btn btn-danger" @click="deleteExp"
+                                :disabled="listExperiments.length === 1">−
+                        </button>
                     </div>
                 </div>
 
@@ -134,15 +136,14 @@
 </template>
 
 <script>
-    //    import {actions} from '../../assets/js/globalMixin'
     import mixedComponent from './MixedParams.vue'
     import {mapFields} from 'vuex-map-fields';
     import {EventBus} from "../../assets/js/EventBus";
-    // import {actions} from "../../assets/js/globalMixin";
+    import {actions} from "../../assets/js/globalMixin";
     import {cloneDeep} from 'lodash'
 
     export default {
-        // mixins: [actions],
+        mixins: [actions],
         components: {mixedComponent},
         data() {
             return {
@@ -152,7 +153,8 @@
                     {text: 'Simpson', value: 'S'},
                     {text: 'Mixed', value: 'M'},
                     {text: 'Optimize', value: 'O'}
-                ]
+                ],
+                localLastIndex: 0
             }
         },
         computed: {
@@ -185,9 +187,18 @@
         methods: {
             addExp() {
                 this.orderBySoloFormula(cloneDeep(this.LastExperiment, true), 'add')
+                this.setNewLast(this.listExperiments.length - 1)
+
             },
             setNewLast(i) {
-                this.$store.commit('customMutateLast', cloneDeep(this.listExperiments[i], true))
+                if (this.localLastIndex !== i) {
+                    this.localLastIndex = i
+                    this.$store.commit('customMutateLast', cloneDeep(this.listExperiments[i], true))
+                }
+            },
+            deleteExp() {
+                EventBus.$emit('deleteLine', this.LastExperiment.name)
+                this.$store.commit('removeFromAdded', this.localLastIndex)
             }
         },
         mounted() {

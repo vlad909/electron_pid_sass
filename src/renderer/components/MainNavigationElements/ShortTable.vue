@@ -20,11 +20,11 @@
     </div>
 </template>
 <script>
-    // import {actions} from '../../assets/js/globalMixin'
+    import {actions} from '../../assets/js/globalMixin'
     import {mapGetters} from 'vuex';
 
     export default {
-        // mixins: [actions],
+        mixins: [actions],
         computed: {
             currentExperiment() {
                 return this.$store.state.lastExperiment || {}
@@ -47,9 +47,7 @@
             }
         },
         created() {
-            /*TODO вернуть локальные миксины вместо глобального
-            разобраться  удалением из списка экспериментов
-        добавление графика и удаление, вывод списка
+            /*TODO  добавление графика и удаление, вывод списка
              */
             this.orderBySoloFormula(this.currentExperiment, 'add')
         }
