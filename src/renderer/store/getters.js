@@ -8,7 +8,8 @@ export default {
     getDX(state) {
         return state.lastExperimentData.data ? state.lastExperimentData.data.dx : []
     },
-    getAll(state) {
-        return state.lastExperimentData.data
+    getMaxCountInListOfExperiment(state) {
+        let list = state.listAddedExperiments
+        return Math.max(...new Set(list.map(e => e.n)))
     }
 }

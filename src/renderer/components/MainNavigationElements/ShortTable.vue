@@ -47,7 +47,7 @@
             }
         },
         created() {
-            /*TODO  добавление графика и удаление, вывод списка
+            /*TODO  контроль xaxis
              */
             this.orderBySoloFormula(this.currentExperiment, 'add')
         }

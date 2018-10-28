@@ -1,6 +1,6 @@
 <template>
     <div class="small">
-        <!--<button @click="addd">b;a</button>-->
+        <!--<button @click="fakeX">b;a</button>-->
         <apexcharts :width="1000" :height="400" type="line" :options="chartOptions" :series="series"></apexcharts>
         <!--<LineChart v-if="showChart" :chart-data="datacollection" :options="options" ref="myLine"></LineChart>-->
     </div>
@@ -9,6 +9,7 @@
     //    import LineChart from '../../assets/js/LineChart.js'
     import VueApexCharts from 'vue-apexcharts'
     import {EventBus} from '../../assets/js/EventBus.js'
+    import {mapGetters} from 'vuex';
 
     export default {
         components: {apexcharts: VueApexCharts},
@@ -44,28 +45,35 @@
         computed: {
             x_count() {
                 return this.$store.state.lastExperiment.n || 100
-            }
+            },
+            ...mapGetters({
+                xaxis_new: 'getMaxCountInListOfExperiment'
+            })
         },
         watch: {
             x_count(n) {
+                /*TODO УДАЛИТЬ ЭТОТ КУСОК И ВСЁ ЧТО С НИМ СВЯЗАНО КАК НЕИСПОЛЬЗУЕМЫЙ*/
                 //простое изменение не работает, зато работает программное управление
+            },
+            xaxis_new(n) {
+                console.log(n, 'fd')
                 this.$apexcharts.exec('vuechart-example', 'updateOptions', {
                     xaxis: {
                         categories: [...Array(n).keys()],
                         type: 'numeric'
                     }
                 })
-            },
+            }
         },
         methods: {
-//            getRandomInt () {
-//                return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-//            },
-//            addd(){
-//                this.$router.push({
-//                    name: 'chartist'
-//                })
-//            },
+            // fakeX() {
+            //     this.$apexcharts.exec('vuechart-example', 'updateOptions', {
+            //         xaxis: {
+            //             categories: [...Array(1001).keys()],
+            //             type: 'numeric'
+            //         }
+            //     })
+            // }
         },
         created() {
             EventBus.$on('addLine', (name, data) => {
