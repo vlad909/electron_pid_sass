@@ -14,6 +14,10 @@ export const actions = {
         somethingIsVoid(obj) { //если одно из полей метода отсутствует
             return Object.values(obj).some(e => e === null || e === '')
         },
+        somethingIsVoidSpecialForOnlyNumberValues(obj) {
+            return Object.values(obj).some(e => e === null || e === '' || isNaN(e))
+        },
+
         limiterByWidth(count, what = 'px') {
             return {width: count + what}
         },

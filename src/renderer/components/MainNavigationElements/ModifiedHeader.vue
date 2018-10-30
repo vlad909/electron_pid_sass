@@ -50,7 +50,7 @@
                     <label class="m-l-r-10 label-standart-20" for="Kd">Kd</label>
                     <input type="text" class="form-control limiter-input" id="Kd" v-model.number="Kd">
                 </div>
-                <div class="form-group d-inline-flex">
+                <div class="form-group d-inline-flex" :class="{'has-danger' : T <=0}">
                     <label class="m-l-r-10 label-standart-20" for="bigT">T</label>
                     <input type="text" class="form-control limiter-input" id="bigT" v-model.number="T">
                 </div>

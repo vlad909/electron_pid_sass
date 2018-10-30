@@ -43,20 +43,12 @@
             }
         },
         computed: {
-            x_count() {
-                return this.$store.state.lastExperiment.n || 100
-            },
             ...mapGetters({
                 xaxis_new: 'getMaxCountInListOfExperiment'
             })
         },
         watch: {
-            x_count(n) {
-                /*TODO УДАЛИТЬ ЭТОТ КУСОК И ВСЁ ЧТО С НИМ СВЯЗАНО КАК НЕИСПОЛЬЗУЕМЫЙ*/
-                //простое изменение не работает, зато работает программное управление
-            },
             xaxis_new(n) {
-                console.log(n, 'fd')
                 this.$apexcharts.exec('vuechart-example', 'updateOptions', {
                     xaxis: {
                         categories: [...Array(n).keys()],

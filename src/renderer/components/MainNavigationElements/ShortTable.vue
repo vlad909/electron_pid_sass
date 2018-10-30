@@ -22,6 +22,7 @@
 <script>
     import {actions} from '../../assets/js/globalMixin'
     import {mapGetters} from 'vuex';
+    import {cloneDeep} from 'lodash'
 
     export default {
         mixins: [actions],
@@ -39,7 +40,9 @@
             currentExperiment: {
                 handler(n) {
                     console.log(n, 'new w')
-                    if (!this.somethingIsVoid(n)) { //если один из аргументов пуст, то не вызывать
+                    let copy = cloneDeep(n, true)
+                    delete copy.selected_formula
+                    if (!this.somethingIsVoidSpecialForOnlyNumberValues(copy) && copy.T > 0) { //если один из аргументов пуст, то не вызывать
                         this.orderBySoloFormula(n) //action = change by default
                     }
                 },
@@ -47,8 +50,6 @@
             }
         },
         created() {
-            /*TODO  контроль xaxis
-             */
             this.orderBySoloFormula(this.currentExperiment, 'add')
         }
     }
