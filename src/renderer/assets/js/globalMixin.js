@@ -34,9 +34,13 @@ export const actions = {
                 case 'T':
                     this.experiment.standard_K = {
                         K0: exp.Kp + (exp.Ki / 2) * exp.T + exp.Kd / exp.T,
-                        K1: -(exp.Kp + (2 * exp.Kd) / exp.T - exp.Ki / 2 * exp.T),
+                        K1: -(exp.Kp + (2 * exp.Kd) / exp.T - (exp.Ki / 2)),
                         K2: exp.Kd / exp.T
+                        // K0: exp.Kp + (exp.Ki / 2) * exp.T + exp.Kd / exp.T,
+                        // K1: -(exp.Kp + (2 * exp.Kd) / exp.T - (exp.Ki / 2) * exp.T),
+                        // K2: exp.Kd / exp.T
                     }
+                    this.trapezeMethod(exp, this.experiment.standard_K, action)
                     break
                 case 'S':
                     this.experiment.standard_K = {
@@ -51,6 +55,36 @@ export const actions = {
                     break
             }
             // this.$store.commit('addToListOfExperiments', this.experiment)
+        },
+        /*TODO  объединить методы трап и прямоугол, т.к. у них отличаетася вычисление только U(1)*/
+        trapezeMethod(setting, auto_params, action){
+            let x = [],
+                U = [],
+                dx = [],
+                count = Math.floor(setting.t / setting.T)
+            EventBus.$emit('changeDisabledCountN', count)
+            // result.U.push(setting.Kp * setting.x0) // U by n = 0
+            for (let i = 0; i <= count - 1; i++) {
+                x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
+                dx.push(setting.x0 - x[i])
+                U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : (setting.Ki * setting.T / 2 - setting.Kd / setting.T) * setting.x0)
+                    : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
+            }
+            if (action !== 'change') {
+                setting.name = Date.now()
+                this.addToListAdded(setting)
+            }
+            EventBus.$emit(action === 'change' ? 'changeLineByName' : 'addLine', setting.name, x)
+            this.$store.commit('setDataInLastExperiment', Object.assign({}, {
+                name: setting.name,
+                creates_method: action,
+            }, {
+                data: {
+                    x: x,
+                    U: U,
+                    dx: dx
+                }
+            }))
         },
         rectangleMethod(setting, auto_params, action) { //пока только для константы
             let x = [],
@@ -70,7 +104,6 @@ export const actions = {
                 setting.name = Date.now()
                 this.addToListAdded(setting)
             }
-            console.log('act', action)
             EventBus.$emit(action === 'change' ? 'changeLineByName' : 'addLine', setting.name, x)
             this.$store.commit('setDataInLastExperiment', Object.assign({}, {
                 name: setting.name,

@@ -61,9 +61,9 @@
 }
 
 .exp-table li {
+    width: 182px;
     list-style: none !important;
-    width: auto;
-    margin: 1px 5px 3px;
+    margin: 5px 0;
     text-align: left;
 }
 
