@@ -11,5 +11,8 @@ export default {
     getMaxCountInListOfExperiment(state) {
         let list = state.listAddedExperiments
         return Math.max(...new Set(list.map(e => e.n)))
+    },
+    triggerError(state){
+        return state.errorCaller
     }
 }

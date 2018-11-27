@@ -1,8 +1,6 @@
 export default {
     addToListOfExperiments(state, payload) {
-        let olds = state.allExperiments
-        olds.push(payload)
-        state.allExperiments = olds
+        state.allExperiments.push(payload)
     },
     toLastExperiment(state, payload) {
         state.lastExperiment = payload
@@ -11,17 +9,15 @@ export default {
         state.lastExperimentData = payload
     },
     addToAdded(state, payload) {
-        let prev = state.listAddedExperiments
-        prev.push(payload)
-        state.listAddedExperiments = prev
+        state.listAddedExperiments.push(payload)
     },
     removeFromAdded(state, index) {
-        let prev = state.listAddedExperiments
-        prev.splice(index, 1)
-        state.listAddedExperiments = prev
+        state.listAddedExperiments.splice(index, 1)
     },
     customMutateLast(state, payload) {
         state.lastExperiment = payload
+    },
+    setError(state, payload){
+        state.errorCaller = payload
     }
-
 }

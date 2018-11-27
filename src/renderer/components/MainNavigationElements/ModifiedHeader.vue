@@ -100,7 +100,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="d-flex flex-column align-items-start justify-content-center m-l-10">
+                    <div class="d-flex flex-column align-items-start justify-content-center m-l-20">
                         <button type="button" class="btn btn-success m-b-10" @click="addExp">+</button>
                         <button type="button" class="btn btn-danger" @click="deleteExp"
                                 :disabled="listExperiments.length === 1">−
@@ -132,6 +132,9 @@
             </div>
             <button type="button" class="btn btn-success m-l-20" title="Copy data to old method">Swap params</button>
         </div>
+        <div class="alert alert-setting" :class="errorMessage.type" role="alert" v-if="errorMessage.message">
+            {{errorMessage.message}}
+        </div>
     </div>
 </template>
 
@@ -141,6 +144,7 @@
     import {EventBus} from "../../assets/js/EventBus";
     import {actions} from "../../assets/js/globalMixin";
     import {cloneDeep} from 'lodash'
+    import {mapGetters} from 'vuex'
 
     export default {
         mixins: [actions],
@@ -182,7 +186,10 @@
             },
             LastExperiment() {
                 return this.$store.state.lastExperiment
-            }
+            },
+            ...mapGetters({
+                errorMessage: 'triggerError'
+            })
         },
         methods: {
             addExp() {
@@ -221,4 +228,8 @@
         }
     }
 
+    .alert-setting {
+        width: 500px;
+        margin: 0 auto;
+    }
 </style>

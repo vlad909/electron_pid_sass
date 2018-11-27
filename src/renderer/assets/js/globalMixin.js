@@ -22,6 +22,7 @@ export const actions = {
             return {width: count + what}
         },
         orderBySoloFormula(exp, action = 'change') { //расчёт стандартных K
+            this.$store.commit('setError', {})
             switch (exp.selected_formula) {
                 case 'P':
                     this.experiment.standard_K = {
@@ -73,7 +74,6 @@ export const actions = {
                     case 1:
 
                         U.push((setting.Ki * setting.T / 2 - setting.Kd / setting.T) * setting.x0)
-                        console.log('1', U[i])
                         break
                     case 2:
                         U.push(auto_params.evenK0 * dx[i] + (setting.Ki
@@ -82,7 +82,6 @@ export const actions = {
                     default:
                         U.push(i % 2 === 0 ? U[i - 1] + auto_params.evenK0 * dx[i] + auto_params.evenK1 * dx[i - 1] + auto_params.evenK2 * dx[i - 2] :
                             U[i - 1] + auto_params.oddK0 * dx[i] + auto_params.oddK1 * dx[i - 1] + auto_params.oddK2 * dx[i - 2])
-                        console.log(i, 'i', U[i])
                         break
                 }
             }
@@ -108,7 +107,6 @@ export const actions = {
                 U = [],
                 dx = [],
                 count = Math.floor(setting.t / setting.T)
-            EventBus.$emit('changeDisabledCountN', count)
             // result.U.push(setting.Kp * setting.x0) // U by n = 0
             for (let i = 0; i <= count - 1; i++) {
                 x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
@@ -121,7 +119,17 @@ export const actions = {
                     U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : (setting.Ki * setting.T / 2 - setting.Kd / setting.T) * setting.x0)
                         : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
                 }
+                /*TODO не особо оптимально. можно просто ограничить до 4х знаков без перегона */
+                // if (!this.NaNFinder([x[i], dx[i], U[i]])) {
+                //     this.$store.commit('setError', {
+                //         type: 'alert-danger',
+                //         message: `${i} остановлен`
+                //     })
+                //     EventBus.$emit('changeDisabledCountN', i-2)
+                //     return
+                // }
             }
+            EventBus.$emit('changeDisabledCountN', count)
             if (action !== 'change') {
                 setting.name = Date.now()
                 this.addToListAdded(setting)
@@ -137,6 +145,9 @@ export const actions = {
                     dx: dx
                 }
             }))
+        },
+        NaNFinder(array){
+            return array.every(el => Number.isFinite(el))
         }
 
     }

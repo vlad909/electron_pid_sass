@@ -58,6 +58,9 @@
 
 .exp-table {
     width: 200px;
+    height: 130px;
+    overflow-y: scroll;
+    margin-bottom: 0;
 }
 
 .exp-table li {

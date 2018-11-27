@@ -27,7 +27,11 @@ const state = {
         selected_formula: 'P',
     },
     lastExperimentData: {},
-    listAddedExperiments: []
+    listAddedExperiments: [],
+    errorCaller: {
+        type: 'alert-danger',
+        message: ''
+    }
 }
 
 export default new Vuex.Store({
