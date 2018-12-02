@@ -106,8 +106,8 @@ export const actions = {
             let x = [],
                 U = [],
                 dx = [],
-                count = Math.floor(setting.t / setting.T)
-            // result.U.push(setting.Kp * setting.x0) // U by n = 0
+                count = Math.floor(setting.t / setting.T),
+                infinityError = false
             for (let i = 0; i <= count - 1; i++) {
                 x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
                 dx.push(setting.x0 - x[i])
@@ -119,17 +119,24 @@ export const actions = {
                     U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : (setting.Ki * setting.T / 2 - setting.Kd / setting.T) * setting.x0)
                         : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
                 }
-                /*TODO не особо оптимально. можно просто ограничить до 4х знаков без перегона */
-                // if (!this.NaNFinder([x[i], dx[i], U[i]])) {
-                //     this.$store.commit('setError', {
-                //         type: 'alert-danger',
-                //         message: `${i} остановлен`
-                //     })
-                //     EventBus.$emit('changeDisabledCountN', i-2)
-                //     return
-                // }
+                if (!this.NaNFinder([x[i], dx[i], U[i]])) {
+                    console.log(x[i], dx[i], U[i], 'x dx U')
+                    this.$store.commit('setError', {
+                        type: 'alert-danger',
+                        message: `The calculation was stopped at ${i} step due to overflow.`
+                    })
+                    U.splice(i, 1)
+                    x.splice(i, 1)
+                    dx.splice(i, 1)
+                    EventBus.$emit('changeDisabledCountN', i)
+                    infinityError = true
+                    break
+                }
             }
-            EventBus.$emit('changeDisabledCountN', count)
+            console.log('не вылетел')
+            if (!infinityError) {
+                EventBus.$emit('changeDisabledCountN', count)
+            }
             if (action !== 'change') {
                 setting.name = Date.now()
                 this.addToListAdded(setting)
@@ -146,7 +153,7 @@ export const actions = {
                 }
             }))
         },
-        NaNFinder(array){
+        NaNFinder(array) {
             return array.every(el => Number.isFinite(el))
         }
 

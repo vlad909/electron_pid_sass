@@ -53,7 +53,8 @@
 .like-table li, .like-table-n li {
     list-style: none !important;
     width: auto;
-    border: 1px solid #eee;
+    border: 1px solid #999;
+    padding: 1px 3px;
 }
 
 .exp-table {
@@ -72,6 +73,7 @@
 
 .like-table {
     width: 120px;
+    overflow-x: hidden;
 }
 
 .like-table-n {

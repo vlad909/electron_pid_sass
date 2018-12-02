@@ -132,7 +132,7 @@
             </div>
             <button type="button" class="btn btn-success m-l-20" title="Copy data to old method">Swap params</button>
         </div>
-        <div class="alert alert-setting" :class="errorMessage.type" role="alert" v-if="errorMessage.message">
+        <div class="alert alert-setting text-center" :class="errorMessage.type" role="alert" v-if="errorMessage.message">
             {{errorMessage.message}}
         </div>
     </div>
