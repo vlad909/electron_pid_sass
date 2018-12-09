@@ -1,5 +1,5 @@
 import {EventBus} from './EventBus.js'
-
+import {cloneDeep} from 'lodash'
 export const actions = {
     data() {
         return {
@@ -62,8 +62,9 @@ export const actions = {
             let x = [],
                 U = [],
                 dx = [],
-                count = Math.floor(setting.t / setting.T)
-            EventBus.$emit('changeDisabledCountN', count)
+                count = Math.floor(setting.t / setting.T),
+                infinityError = false
+            // EventBus.$emit('changeDisabledCountN', count)
             for (let i = 0; i <= count - 1; i++) {
                 x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
                 dx.push(setting.x0 - x[i])
@@ -84,6 +85,22 @@ export const actions = {
                             U[i - 1] + auto_params.oddK0 * dx[i] + auto_params.oddK1 * dx[i - 1] + auto_params.oddK2 * dx[i - 2])
                         break
                 }
+                if (!this.NaNFinder([x[i], dx[i], U[i]])) {
+                    console.log(x[i], dx[i], U[i], 'x dx U')
+                    this.$store.commit('setError', {
+                        type: 'alert-danger',
+                        message: `The calculation was stopped at ${i} step due to overflow.`
+                    })
+                    U.splice(i, 1)
+                    x.splice(i, 1)
+                    dx.splice(i, 1)
+                    EventBus.$emit('changeDisabledCountN', i)
+                    infinityError = true
+                    break
+                }
+            }
+            if (!infinityError) {
+                EventBus.$emit('changeDisabledCountN', count)
             }
             if (action !== 'change') {
                 setting.name = Date.now()
@@ -107,20 +124,33 @@ export const actions = {
                 U = [],
                 dx = [],
                 count = Math.floor(setting.t / setting.T),
-                infinityError = false
+                infinityError = false,
+                $a = null,
+                $b = null,
+                betta$E = 0,
+                copy_setting = cloneDeep(setting)
+            if (copy_setting.LRBE) {
+                $a = copy_setting.R / copy_setting.L
+                $b = copy_setting.Betta / copy_setting.L
+                copy_setting.a = 1 / (1 + $a * copy_setting.T)
+                copy_setting.b = $b * copy_setting.T / (1 + $a * copy_setting.T)
+                betta$E = copy_setting.b * copy_setting.E
+                EventBus.$emit('setNotAutoParams', copy_setting.a, copy_setting.b)
+            }
+
             for (let i = 0; i <= count - 1; i++) {
-                x.push(i === 0 ? 0 : setting.a * x[i - 1] + setting.b * U[i - 1])
-                dx.push(setting.x0 - x[i])
-                if (setting.selected_formula === 'P') {
-                    U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : auto_params.K0 * setting.x0 - auto_params.K0 * x[i] - auto_params.K2 *
-                        setting.x0)
+                x.push(i === 0 ? 0 : copy_setting.a * x[i - 1] + copy_setting.b * U[i - 1] + betta$E)
+                dx.push(copy_setting.x0 - x[i])
+                if (copy_setting.selected_formula === 'P') {
+                    U.push(i === 0 || i === 1 ? (i === 0 ? copy_setting.Kp * copy_setting.x0 : auto_params.K0 * copy_setting.x0 - auto_params.K0 * x[i] - auto_params.K2 *
+                        copy_setting.x0)
                         : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
                 } else {
-                    U.push(i === 0 || i === 1 ? (i === 0 ? setting.Kp * setting.x0 : (setting.Ki * setting.T / 2 - setting.Kd / setting.T) * setting.x0)
+                    U.push(i === 0 || i === 1 ? (i === 0 ? copy_setting.Kp * copy_setting.x0 : (copy_setting.Ki * copy_setting.T / 2 - copy_setting.Kd / copy_setting.T) * copy_setting.x0)
                         : U[i - 1] + auto_params.K0 * dx[i] + auto_params.K1 * dx[i - 1] + auto_params.K2 * dx[i - 2])
                 }
                 if (!this.NaNFinder([x[i], dx[i], U[i]])) {
-                    console.log(x[i], dx[i], U[i], 'x dx U')
+                    // console.log(x[i], dx[i], U[i], 'x dx U')
                     this.$store.commit('setError', {
                         type: 'alert-danger',
                         message: `The calculation was stopped at ${i} step due to overflow.`
@@ -133,7 +163,6 @@ export const actions = {
                     break
                 }
             }
-            console.log('не вылетел')
             if (!infinityError) {
                 EventBus.$emit('changeDisabledCountN', count)
             }

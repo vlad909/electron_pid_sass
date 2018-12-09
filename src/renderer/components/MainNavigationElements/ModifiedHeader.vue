@@ -56,12 +56,12 @@
                 </div>
                 <div class="form-group d-inline-flex">
                     <label class="m-l-10" for="ap">a(p)</label>
-                    <input type="text" class="form-control limiter-input m-l-5" id="ap" v-model.number="ap"
+                    <input type="text" class="form-control limiter-input m-l-5" id="ap" v-model.number="ar"
                            :readonly="!LRBE">
                 </div>
                 <div class="form-group d-inline-flex">
                     <label class="m-l-10" for="bp">b(p)</label>
-                    <input type="text" class="form-control limiter-input m-l-5" id="bp" v-model.number="bp"
+                    <input type="text" class="form-control limiter-input m-l-5" id="bp" v-model.number="br"
                            :readonly="!LRBE">
                 </div>
                 <div class="form-group d-inline-flex" style="margin-top: -7px;">
@@ -132,7 +132,8 @@
             </div>
             <button type="button" class="btn btn-success m-l-20" title="Copy data to old method">Swap params</button>
         </div>
-        <div class="alert alert-setting text-center" :class="errorMessage.type" role="alert" v-if="errorMessage.message">
+        <div class="alert alert-setting text-center" :class="errorMessage.type" role="alert"
+             v-if="errorMessage.message">
             {{errorMessage.message}}
         </div>
     </div>
@@ -158,7 +159,9 @@
                     {text: 'Mixed', value: 'M'},
                     {text: 'Optimize', value: 'O'}
                 ],
-                localLastIndex: 0
+                localLastIndex: 0,
+                ar: 0.27,
+                br: 0.27
             }
         },
         computed: {
@@ -170,8 +173,8 @@
                 'lastExperiment.E',
                 'lastExperiment.a',
                 'lastExperiment.b',
-                'lastExperiment.ap',
-                'lastExperiment.bp',
+                // 'lastExperiment.ap',
+                // 'lastExperiment.bp',
                 'lastExperiment.n',
                 'lastExperiment.x0',
                 'lastExperiment.Kp',
@@ -212,6 +215,10 @@
         mounted() {
             EventBus.$on('changeDisabledCountN', (n) => {
                 this.n = n
+            })
+            EventBus.$on('setNotAutoParams', (ar, br) => {
+                this.ar = ar
+                this.br = br
             })
         }
     }
