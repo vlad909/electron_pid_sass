@@ -137,7 +137,7 @@ export const actions = {
                 betta$E = copy_setting.b * copy_setting.E
                 EventBus.$emit('setNotAutoParams', copy_setting.a, copy_setting.b)
             }
-
+/*TODO нужно перенести этот метод в Симпсона (или как-то унифицировать)*/
             for (let i = 0; i <= count - 1; i++) {
                 x.push(i === 0 ? 0 : copy_setting.a * x[i - 1] + copy_setting.b * U[i - 1] + betta$E)
                 dx.push(copy_setting.x0 - x[i])
