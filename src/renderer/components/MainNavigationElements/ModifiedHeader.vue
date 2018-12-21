@@ -96,7 +96,7 @@
                                 v-for="(e, index) in listExperiments"
                                 :key="index"
                                 @click="setNewLast(index)">
-                                {{e.name}}
+                                {{stampToDate(e.name)}}
                             </li>
                         </ul>
                     </div>
@@ -146,7 +146,7 @@
     import {actions} from "../../assets/js/globalMixin";
     import {cloneDeep} from 'lodash'
     import {mapGetters} from 'vuex'
-
+    import moment from 'moment'
     export default {
         mixins: [actions],
         components: {mixedComponent},
@@ -195,6 +195,9 @@
             })
         },
         methods: {
+            stampToDate(stamp){
+                return moment(stamp).format('lll')
+            },
             addExp() {
                 this.orderBySoloFormula(cloneDeep(this.LastExperiment, true), 'add')
                 this.setNewLast(this.listExperiments.length - 1)
